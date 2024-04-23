@@ -40,6 +40,10 @@ const config = {
 					DEFAULT: 'var(--muted)',
 					foreground: 'var(--muted-foreground)',
 				},
+				one: {
+					DEFAULT: 'var(--one)',
+					foreground: 'var(--one-foreground)',
+				},
 				accent: {
 					DEFAULT: 'var(--accent)',
 					foreground: 'var(--accent-foreground)',

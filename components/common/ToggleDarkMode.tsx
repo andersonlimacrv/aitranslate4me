@@ -1,49 +1,60 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BsSun, BsMoonStars } from 'react-icons/bs';
+import { useTheme } from 'next-themes';
 
 const ToggleDarkMode: React.FC = () => {
-	const [isChecked, setIsChecked] = useState<boolean>(false);
+	const { setTheme, resolvedTheme } = useTheme();
+	const [darkMode, setDarkMode] = useState<boolean>(false);
 
-	const handleCheckboxChange = () => {
-		setIsChecked(!isChecked);
+	const toggleDarkMode = () => {
+		setDarkMode(!darkMode);
+		setTheme(darkMode ? 'light' : 'dark');
 	};
+
+	useEffect(() => {
+		if (resolvedTheme === 'dark') {
+			setDarkMode(true);
+		} else {
+			setDarkMode(false);
+		}
+	}, [resolvedTheme]);
 
 	return (
 		<>
 			<label className="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center">
 				<input
 					type="checkbox"
-					checked={isChecked}
-					onChange={handleCheckboxChange}
+					checked={darkMode}
+					onChange={toggleDarkMode}
 					className="sr-only"
 				/>
-				<div className="bordershadow-card flex h-[38px] w-[78px] items-center justify-center rounded-[20px] bg-primary overflow-hidden px-2">
+				<div className="flex h-[38px] w-[74px] items-center justify-center rounded-[25px] bg-accent-foreground overflow-hidden px-2">
 					<div
-						className={`flex h-7 w-7 items-center justify-center rounded-full absolute transition-all duration-200 transform ${
-							isChecked
+						className={`flex h-8 w-8 items-center justify-center rounded-full absolute transition-all duration-200 transform ${
+							darkMode
 								? 'translate-x-4'
 								: '-translate-x-4'
-						} bg-muted`}
+						} bg-primary-foreground`}
 					></div>
 					<div className="flex gap-x-2 px-2">
 						<div
 							className={`z-10 flex h-6 w-6 items-center justify-center ${
-								isChecked
-									? 'text-muted'
+								darkMode
+									? 'text-muted-foreground'
 									: 'text-primary'
 							} `}
 						>
-							<BsMoonStars size={16} />
+							<BsSun size={17} />
 						</div>
 						<div
 							className={`z-10 flex h-6 w-6 items-center justify-center ${
-								isChecked
+								darkMode
 									? 'text-primary'
-									: 'text-muted'
+									: 'text-secondary'
 							} `}
 						>
-							<BsSun size={17} />
+							<BsMoonStars size={16} />
 						</div>
 					</div>
 				</div>
